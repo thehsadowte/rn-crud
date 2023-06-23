@@ -1,19 +1,20 @@
-import { FlatList, Image, StyleSheet, Text, View, Button } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { View, Button, FlatList, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Post from '../components/Post';
-import { getAllPosts, createPost } from '../services/api';
+import { getAllPosts } from '../services/api';
 import Loader from '../components/Loader';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
+  const navigation = useNavigation();
+
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [creatingPost, setCreatingPost] = useState(false);
-
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [navigation]);
 
   const fetchPosts = () => {
     setLoading(true);
@@ -67,7 +68,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // width: '95%',
     alignItems: 'center',
     justifyContent: 'center',
   },

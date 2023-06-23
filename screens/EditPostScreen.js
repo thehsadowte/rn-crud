@@ -1,37 +1,7 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, { useState } from 'react';
-import { createPost } from '../services/api';
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 
-const CreatePostScreen = ({ navigation }) => {
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
-  const [image, setImage] = useState('');
-  const [url, setUrl] = useState('');
-
-  const handleCreatePost = () => {
-    createPost({ title, text, image, url })
-      .then((response) => {
-        console.log(response.data);
-
-        setTitle('');
-        setText('');
-        setImage('');
-        setUrl('');
-
-        navigation.goBack();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
+const EditPostScreen = () => {
   return (
     <SafeAreaView>
       <View style={styles.form}>
