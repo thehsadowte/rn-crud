@@ -29,6 +29,10 @@ const HomeScreen = () => {
       });
   };
 
+  //   handleEditBtn = () => {
+  //     navigation.navigate('EditPostScreen');
+  //   };
+
   const renderItem = React.useCallback(({ item }) => {
     return (
       <Post
@@ -36,6 +40,7 @@ const HomeScreen = () => {
         text={item.text}
         image={item.image}
         created_at={item.created_at}
+        onPress={handleEditBtn}
       />
     );
   }, []);

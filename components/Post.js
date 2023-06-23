@@ -4,12 +4,14 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  Touchable,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
 import moment from 'moment';
 
-const Post = ({ image, title, text, created_at, url }) => {
+const Post = ({ image, title, text, created_at, url, onPress }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -29,6 +31,9 @@ const Post = ({ image, title, text, created_at, url }) => {
             {moment(created_at).format('MMMM Do YYYY')}
           </Text>
         </View>
+        <TouchableOpacity style={styles.btnContainer} onPress={onPress}>
+          <Text style={styles.btnEditText}>Edit Post</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -97,5 +102,16 @@ const styles = StyleSheet.create({
   },
   sourceContainer: {
     marginTop: 10,
+  },
+  btnContainer: {
+    backgroundColor: 'orangered',
+    padding: 12,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  btnEditText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

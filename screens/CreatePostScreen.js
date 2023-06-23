@@ -64,10 +64,6 @@ const CreatePostScreen = ({ navigation }) => {
           onPress={handleCreatePost}>
           <Text style={styles.btnCreate}>Create New Post</Text>
         </TouchableOpacity>
-
-        <Text>{title}</Text>
-        <Text>{text}</Text>
-        <Text>{image}</Text>
       </View>
     </SafeAreaView>
   );
