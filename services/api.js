@@ -62,3 +62,13 @@ export const deletePost = (postId) => {
       throw error;
     });
 };
+
+export async function getPostById(postId) {
+  try {
+    const response = await axios.get(`${postId}`);
+    console.log(`succesfully retrieved post ${postId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch post');
+  }
+}

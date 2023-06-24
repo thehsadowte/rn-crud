@@ -35,8 +35,8 @@ const HomeScreen = () => {
       });
   };
 
-  const handleEditBtn = (post) => {
-    navigation.navigate('EditPostScreen', { post: post });
+  const handleEditBtn = (postId) => {
+    navigation.navigate('EditPostScreen', { postId: postId });
   };
 
   const handleDeletePost = (postId) => {
@@ -61,7 +61,7 @@ const HomeScreen = () => {
             text={item.text}
             image={item.image}
             created_at={item.created_at}
-            onPress={() => handleEditBtn(item)}
+            onPress={() => handleEditBtn(item.id)}
             onDelete={() => handleDeletePost(item.id)}
           />
         </View>

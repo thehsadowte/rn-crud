@@ -1,5 +1,5 @@
 import { useRoute, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,11 +8,12 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import { updatePost } from '../services/api';
+import { updatePost, getPostById } from '../services/api';
 
 const EditPostScreen = () => {
   const route = useRoute();
-  const { post } = route.params;
+  let { postId } = route.params;
+  // let postId = post && post.id ? post.id : 1;
   const navigation = useNavigation();
 
   const [title, setTitle] = useState('');
@@ -20,8 +21,33 @@ const EditPostScreen = () => {
   const [image, setImage] = useState('');
   const [url, setUrl] = useState('');
 
+  useEffect(() => {
+    if (postId) {
+      getPostById(postId)
+        .then((post) => {
+          setTitle(post.title);
+          setText(post.text);
+          setImage(post.image);
+          setUrl(post.url);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      getPostById(1)
+        .then((post) => {
+          setTitle(post.title);
+          setText(post.text);
+          setImage(post.image);
+          setUrl(post.url);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [postId]);
   const handleEditPost = () => {
-    updatePost(post.id, {
+    updatePost(postId, {
       title,
       text,
       image,
