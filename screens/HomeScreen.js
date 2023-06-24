@@ -9,7 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import Post from '../components/Post';
-import { getAllPosts } from '../services/api';
+import { getAllPosts, deletePost } from '../services/api';
 import Loader from '../components/Loader';
 
 const HomeScreen = () => {
@@ -39,28 +39,32 @@ const HomeScreen = () => {
     navigation.navigate('EditPostScreen', { post: post });
   };
 
+  const handleDeletePost = (postId) => {
+    setLoading(true);
+    deletePost(postId)
+      .then(() => {
+        console.log(`Post ${postId} deleted successfully`);
+        fetchPosts();
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
   const renderItem = React.useCallback(
     ({ item }) => {
-      const handleDelete = () => {
-        deletePost(item.id) // Assuming id is the unique identifier for the post
-          .then(() => {
-            console.log('Post deleted');
-            fetchPosts(); // Refresh the posts after deletion
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-
       return (
-        <Post
-          title={item.title}
-          text={item.text}
-          image={item.image}
-          created_at={item.created_at}
-          onPress={() => handleEditBtn(item)}
-          onDelete={handleDelete}
-        />
+        <View>
+          <Post
+            title={item.title}
+            text={item.text}
+            image={item.image}
+            created_at={item.created_at}
+            onPress={() => handleEditBtn(item)}
+            onDelete={() => handleDeletePost(item.id)}
+          />
+        </View>
       );
     },
     [handleEditBtn, fetchPosts]

@@ -22,16 +22,6 @@ const Post = ({
   onPress,
   onDelete,
 }) => {
-  const handleDelete = () => {
-    deletePost(id)
-      .then(() => {
-        console.log('Post deleted');
-        onDelete();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -54,9 +44,7 @@ const Post = ({
         <TouchableOpacity style={styles.btnContainer} onPress={onPress}>
           <Text style={styles.btnEditText}>Edit Post</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btnDeleteContainer}
-          onPress={handleDelete}>
+        <TouchableOpacity style={styles.btnDeleteContainer} onPress={onDelete}>
           <Text style={styles.btnEditText}>Delete Post</Text>
         </TouchableOpacity>
       </View>

@@ -30,9 +30,6 @@ export const createPost = (postData) => {
 };
 
 const generateId = () => {
-  // Logic to generate a unique ID
-  // You can use a library like uuid or generate a random string
-  // Here's a simple example that generates a timestamp-based ID
   const timestamp = Date.now();
   return `post-${timestamp}`;
 };
@@ -55,13 +52,13 @@ export const updatePost = (postId, postData) => {
 
 export const deletePost = (postId) => {
   return axios
-    .delete(`/${postId}`)
+    .delete(`${postId}`)
     .then((response) => {
-      console.log('Post deleted');
+      console.log(`Post ${postId} deleted successfully`);
       return response.data;
     })
     .catch((error) => {
-      console.log(error.message);
+      console.log(`something went wrong`);
       throw error;
     });
 };
