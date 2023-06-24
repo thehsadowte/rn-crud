@@ -39,17 +39,32 @@ const HomeScreen = () => {
     navigation.navigate('EditPostScreen', { post: post });
   };
 
-  const renderItem = React.useCallback(({ item }) => {
-    return (
-      <Post
-        title={item.title}
-        text={item.text}
-        image={item.image}
-        created_at={item.created_at}
-        onPress={() => handleEditBtn(item)}
-      />
-    );
-  }, []);
+  const renderItem = React.useCallback(
+    ({ item }) => {
+      const handleDelete = () => {
+        deletePost(item.id) // Assuming id is the unique identifier for the post
+          .then(() => {
+            console.log('Post deleted');
+            fetchPosts(); // Refresh the posts after deletion
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
+      return (
+        <Post
+          title={item.title}
+          text={item.text}
+          image={item.image}
+          created_at={item.created_at}
+          onPress={() => handleEditBtn(item)}
+          onDelete={handleDelete}
+        />
+      );
+    },
+    [handleEditBtn, fetchPosts]
+  );
 
   const keyExtractor = React.useCallback((item) => {
     return `${item.id}-${item.someUniqueProperty}`;

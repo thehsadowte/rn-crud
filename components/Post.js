@@ -10,8 +10,28 @@ import {
 } from 'react-native';
 import React from 'react';
 import moment from 'moment';
+import { deletePost } from '../services/api';
 
-const Post = ({ image, title, text, created_at, url, onPress }) => {
+const Post = ({
+  id,
+  image,
+  title,
+  text,
+  created_at,
+  url,
+  onPress,
+  onDelete,
+}) => {
+  const handleDelete = () => {
+    deletePost(id)
+      .then(() => {
+        console.log('Post deleted');
+        onDelete();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.imageContainer}>
@@ -33,6 +53,11 @@ const Post = ({ image, title, text, created_at, url, onPress }) => {
         </View>
         <TouchableOpacity style={styles.btnContainer} onPress={onPress}>
           <Text style={styles.btnEditText}>Edit Post</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btnDeleteContainer}
+          onPress={handleDelete}>
+          <Text style={styles.btnEditText}>Delete Post</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -108,10 +133,18 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 6,
     alignItems: 'center',
+    marginBottom: 8,
   },
   btnEditText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  btnDeleteContainer: {
+    backgroundColor: 'black',
+    padding: 12,
+
+    borderRadius: 6,
+    alignItems: 'center',
   },
 });

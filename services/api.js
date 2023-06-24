@@ -13,13 +13,12 @@ export const getAllPosts = () => {
     });
 };
 export const createPost = (postData) => {
+  const postId = generateId(); // Generate a unique ID for the post
+
+  const postWithId = { id: postId, ...postData }; // Include the generated ID in the post data
+
   return axios
-    .post('', {
-      title: postData.title,
-      text: postData.text,
-      image: postData.image,
-      url: postData.url,
-    })
+    .post('/', postWithId)
     .then((response) => {
       console.log(response.data);
       return response.data;
@@ -28,6 +27,14 @@ export const createPost = (postData) => {
       console.log(error);
       throw error;
     });
+};
+
+const generateId = () => {
+  // Logic to generate a unique ID
+  // You can use a library like uuid or generate a random string
+  // Here's a simple example that generates a timestamp-based ID
+  const timestamp = Date.now();
+  return `post-${timestamp}`;
 };
 
 export const updatePost = (postId, postData) => {
@@ -47,12 +54,14 @@ export const updatePost = (postId, postData) => {
 };
 
 export const deletePost = (postId) => {
-  axios
-    .delete(`${postId}`)
+  return axios
+    .delete(`/${postId}`)
     .then((response) => {
-      console.log('Пост видалено');
+      console.log('Post deleted');
+      return response.data;
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error.message);
+      throw error;
     });
 };
