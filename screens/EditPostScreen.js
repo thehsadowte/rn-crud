@@ -1,7 +1,41 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+} from 'react-native';
+import { updatePost } from '../services/api';
 
 const EditPostScreen = () => {
+  const route = useRoute();
+  const { post } = route.params;
+  const navigation = useNavigation();
+
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
+  const [image, setImage] = useState('');
+  const [url, setUrl] = useState('');
+
+  const handleEditPost = () => {
+    updatePost(post.id, {
+      title,
+      text,
+      image,
+      url,
+    });
+
+    setTitle('');
+    setText('');
+    setImage('');
+    setUrl('');
+
+    navigation.navigate('Home');
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.form}>
@@ -19,31 +53,25 @@ const EditPostScreen = () => {
         />
         <TextInput
           style={styles.textInput}
-          placeholder="Image url"
+          placeholder="Image URL"
           value={image}
           onChangeText={setImage}
         />
         <TextInput
           style={styles.textInput}
-          placeholder="url"
+          placeholder="URL"
           value={url}
           onChangeText={setUrl}
         />
-        <TouchableOpacity
-          style={styles.btnContainer}
-          onPress={handleCreatePost}>
-          <Text style={styles.btnCreate}>Create New Post</Text>
+        <TouchableOpacity style={styles.btnContainer} onPress={handleEditPost}>
+          <Text style={styles.btnEdit}>Edit Post</Text>
         </TouchableOpacity>
-
-        <Text>{title}</Text>
-        <Text>{text}</Text>
-        <Text>{image}</Text>
       </View>
     </SafeAreaView>
   );
 };
 
-export default CreatePostScreen;
+export default EditPostScreen;
 
 const styles = StyleSheet.create({
   form: {
@@ -63,8 +91,9 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     alignItems: 'center',
   },
-  btnCreate: {
+  btnEdit: {
     color: 'white',
+    fontWeight: 'bold',
     fontSize: 16,
   },
 });

@@ -30,10 +30,13 @@ export const createPost = (postData) => {
     });
 };
 
-export const updatePost = () => {
+export const updatePost = (postId, postData) => {
   axios
     .put(`${postId}`, {
-      title: 'Оновлений заголовок',
+      title: postData.title,
+      text: postData.text,
+      image: postData.image,
+      url: postData.url,
     })
     .then((response) => {
       console.log(response.data);

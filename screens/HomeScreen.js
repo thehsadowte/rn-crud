@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  Button,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Post from '../components/Post';
@@ -29,9 +35,9 @@ const HomeScreen = () => {
       });
   };
 
-  //   handleEditBtn = () => {
-  //     navigation.navigate('EditPostScreen');
-  //   };
+  const handleEditBtn = (post) => {
+    navigation.navigate('EditPostScreen', { post: post });
+  };
 
   const renderItem = React.useCallback(({ item }) => {
     return (
@@ -40,7 +46,7 @@ const HomeScreen = () => {
         text={item.text}
         image={item.image}
         created_at={item.created_at}
-        onPress={handleEditBtn}
+        onPress={() => handleEditBtn(item)}
       />
     );
   }, []);

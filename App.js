@@ -4,6 +4,7 @@ import HomeScreen from './screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CreatePostScreen from './screens/CreatePostScreen';
+import EditPostScreen from './screens/EditPostScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,6 +14,7 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="CreatePost" component={CreatePostScreen} />
+        <Tab.Screen name="EditPostScreen" component={EditPostScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
